@@ -33,7 +33,7 @@ public class UserController {
 
     @GetMapping("/api/user/{userId}")
     public User getUserById(@PathVariable Integer userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user don't exist"));
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user doesn't exist"));
     }
 
     @DeleteMapping("/api/user/{userId}")
