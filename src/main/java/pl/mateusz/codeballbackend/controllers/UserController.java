@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.mateusz.codeballbackend.model.User;
 import pl.mateusz.codeballbackend.repositories.UserRepository;
 
-import javax.jws.soap.SOAPBinding;
-
 @CrossOrigin(origins = "*", allowCredentials = "true", maxAge = 3600L)
 @RestController
 public class UserController {
@@ -37,12 +35,14 @@ public class UserController {
     public User getUserById(@PathVariable Integer userId) {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user don't exist"));
     }
+
     @DeleteMapping("/api/user/{userId}")
-    public void deleteUser(@PathVariable Integer id){
+    public void deleteUser(@PathVariable Integer id) {
         userRepository.deleteById(id);
     }
+
     @PutMapping("/api/user/{userId}")
-    public ResponseEntity editUser(@RequestBody User user , @PathVariable int userId){
+    public ResponseEntity editUser(@RequestBody User user, @PathVariable int userId) {
         user.setId(userId);
         userRepository.save(user);
         return new ResponseEntity(HttpStatus.OK);
