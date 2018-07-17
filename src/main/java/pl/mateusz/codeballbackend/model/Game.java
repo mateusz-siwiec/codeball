@@ -1,4 +1,4 @@
-package pl.mateusz.codeballbackend.Model;
+package pl.mateusz.codeballbackend.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,5 +16,5 @@ public class Game {
     private ArrayList<User> teamBIds;
     private Integer teamBScore;
 
-    
+
 }

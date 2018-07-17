@@ -1,4 +1,4 @@
-package pl.mateusz.codeballbackend.Model;
+package pl.mateusz.codeballbackend.model;
 
 public enum EnrollemntStatus {
     YES,
