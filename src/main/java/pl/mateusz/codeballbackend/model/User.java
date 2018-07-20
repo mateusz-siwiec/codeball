@@ -1,15 +1,30 @@
-package pl.mateusz.codeballbackend.Model;
+package pl.mateusz.codeballbackend.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class User {
-
+    @Column (unique = true)
     private String email;
     private String firstName;
+    @Id
+    @GeneratedValue
     private Integer id;
     private String lastName;
     private String pictureUrl;
     private Role role;
 
     public User() {
+    }
+
+    public User(String email, String firstName, String lastName, Role role) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
     }
 
     public User(String email, String firstName, String lastName) {
