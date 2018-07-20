@@ -1,6 +1,6 @@
 package pl.mateusz.codeballbackend.model;
 
-public enum EnrollemntStatus {
+public enum EnrollmentStatus {
     YES,
     NO,
     MAYBE
