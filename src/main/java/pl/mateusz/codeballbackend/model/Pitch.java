@@ -1,7 +1,16 @@
 package pl.mateusz.codeballbackend.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Pitch {
+    @Column(unique = true)
     private String address;
+    @Id
+    @GeneratedValue
     private Integer id;
     private int maxNumberOfPlayers;
     private int minNumberOfPlayers;
@@ -15,6 +24,14 @@ public class Pitch {
 
         this.address = address;
         this.name = name;
+    }
+
+    public Pitch(String address, int maxNumberOfPlayers, int minNumberOfPlayers, String name, PitchType pitchType) {
+        this.address = address;
+        this.maxNumberOfPlayers = maxNumberOfPlayers;
+        this.minNumberOfPlayers = minNumberOfPlayers;
+        this.name = name;
+        this.pitchType = pitchType;
     }
 
     public String getAddress() {
