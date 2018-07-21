@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.mateusz.codeballbackend.model.Role;
 import pl.mateusz.codeballbackend.model.User;
 import pl.mateusz.codeballbackend.repositories.UserRepository;
 
@@ -17,7 +18,7 @@ public class UserController {
 
     @GetMapping("api/user/me")
     public User getCurrentUser() {
-        return new User("ads", "asdaf", "klvf");
+        return new User("ads", "asdaf", "klvf" , Role.ROLE_ADMIN);
     }
 
     @PostMapping("/api/user")
