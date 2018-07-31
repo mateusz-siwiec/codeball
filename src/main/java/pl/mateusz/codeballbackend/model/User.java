@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-    @Column (unique = true)
+    @Column(unique = true)
     private String email;
     private String firstName;
     @Id
@@ -27,11 +27,12 @@ public class User {
         this.role = role;
     }
 
-    public User(String email, String firstName, String lastName) {
-
+    public User(String email, String firstName, Integer id, String lastName, Role role) {
         this.email = email;
         this.firstName = firstName;
+        this.id = id;
         this.lastName = lastName;
+        this.role = role;
     }
 
     public String getEmail() {

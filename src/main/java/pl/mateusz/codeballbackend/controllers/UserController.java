@@ -18,13 +18,12 @@ public class UserController {
 
     @GetMapping("api/user/me")
     public User getCurrentUser() {
-        return new User("ads", "asdaf", "klvf" , Role.ROLE_ADMIN);
+        return new User("ads", "asdaf", 1,"klvf" , Role.ROLE_ADMIN);
     }
 
     @PostMapping("/api/user")
     public ResponseEntity createUser(@RequestBody User user) {
-        userRepository.save(user);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(userRepository.save(user) , HttpStatus.OK);
     }
 
     @GetMapping("/api/user")
@@ -45,9 +44,9 @@ public class UserController {
     @PutMapping("/api/user/{userId}")
     public ResponseEntity editUser(@RequestBody User user, @PathVariable int userId) {
         user.setId(userId);
-        userRepository.save(user);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(userRepository.save(user), HttpStatus.OK);
     }
+
 }
 
 

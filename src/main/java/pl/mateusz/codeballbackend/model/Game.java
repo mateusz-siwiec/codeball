@@ -1,25 +1,32 @@
 package pl.mateusz.codeballbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 @Entity
 public class Game {
-    private Integer durationInMinutes;
-    @ManyToMany
-    private List<Enrollment> enrollments;
     @Id
     @GeneratedValue
     private Integer id;
+    private Integer durationInMinutes;
+    @ManyToMany
+    private List<Enrollment> enrollments;
     private boolean isEnrollmentOver;
     private boolean isGameOver;
-    @ManyToOne
-    private Pitch pitchId;
-    private LocalDateTime startTimestamp;
+    private Integer pitchId;
+    @JsonIgnore
+    private LocalDateTime startTime;
     @OneToMany
     private List<User> teamAIds;
     private Integer teamAScore;
@@ -27,13 +34,31 @@ public class Game {
     private List<User> teamBIds;
     private Integer teamBScore;
 
-    public Game(Integer durationInMinutes, Pitch pitchId, LocalDateTime startTimestamp) {
-        this.durationInMinutes = durationInMinutes;
-        this.pitchId = pitchId;
-        this.startTimestamp = startTimestamp;
+    public Game() {
+        this.enrollments = new ArrayList<>();
+        this.teamAIds = new ArrayList<>();
+        this.teamBIds = new ArrayList<>();
     }
 
-    public Game() {
+    @JsonIgnore
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    @JsonIgnore
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    @JsonGetter("startTimestamp")
+    private long getStartTimestamp() {
+        return startTime.toEpochSecond(OffsetDateTime.now().getOffset());
+    }
+
+    @JsonSetter("startTimestamp")
+    private void setStartTimestamp(long startTimestamp) {
+        this.startTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(startTimestamp),
+                TimeZone.getDefault().toZoneId());
     }
 
     public Integer getDurationInMinutes() {
@@ -77,20 +102,12 @@ public class Game {
         isGameOver = gameOver;
     }
 
-    public Pitch getPitchId() {
+    public Integer getPitchId() {
         return pitchId;
     }
 
-    public void setPitchId(Pitch pitchId) {
+    public void setPitchId(Integer pitchId) {
         this.pitchId = pitchId;
-    }
-
-    public LocalDateTime getStartTimestamp() {
-        return startTimestamp;
-    }
-
-    public void setStartTimestamp(LocalDateTime startTimestamp) {
-        this.startTimestamp = startTimestamp;
     }
 
     public List<User> getTeamAIds() {
@@ -123,5 +140,10 @@ public class Game {
 
     public void setTeamBScore(Integer teamBScore) {
         this.teamBScore = teamBScore;
+    }
+
+    @JsonIgnore
+    public BasicGame getBasicGame() {
+        return new BasicGame(this.id, this.durationInMinutes, this.pitchId, this.startTime);
     }
 }

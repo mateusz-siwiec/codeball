@@ -20,14 +20,15 @@ public class PitchController {
     }
 
     @PostMapping("/api/pitch")
-   public ResponseEntity createPitch(@RequestBody Pitch pitch) {
-        pitchRepository.save(pitch);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity createPitch(@RequestBody Pitch pitch) {
+
+        return new ResponseEntity(pitchRepository.save(pitch), HttpStatus.OK);
     }
 
     @DeleteMapping("/api/pitch/{pitchId}")
-    public void deletePitch(@PathVariable int id) {
+    public ResponseEntity deletePitch(@PathVariable int id) {
         pitchRepository.deleteById(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/api/pitch/{pitchId}")
@@ -36,9 +37,8 @@ public class PitchController {
     }
 
     @PutMapping("/api/pitch/{pitchId}")
-    public ResponseEntity updatePitch(@RequestBody Pitch pitch , @PathVariable Integer pitchId){
+    public ResponseEntity updatePitch(@RequestBody Pitch pitch, @PathVariable Integer pitchId) {
         pitch.setId(pitchId);
-        pitchRepository.save(pitch);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(pitchRepository.save(pitch), HttpStatus.OK);
     }
 }
